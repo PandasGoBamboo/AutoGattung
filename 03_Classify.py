@@ -26,8 +26,11 @@ german_stop_words = stopwords.words('german')
 print('Ich roedel......')
 
 ### 
-#liste = ['CHR', 'ESS', 'REP', 'REZ', 'KOM', 'INT', 'GRF'] 
+
+# Liste mit Gattungen, die nicht ins Training fließen sollen
 liste = ['WRT', 'SAT', 'LEX', 'LES', 'FRG', 'CHR', 'VON', 'SDK', 'PER', 'OFB', 'ANZ'] 
+#liste = ['CHR', 'ESS', 'REP', 'REZ', 'KOM', 'INT', 'GRF'] # Liste relevanter Gattungen
+
 data = pd.read_pickle(file)
 
 new = data[~data['pform'].isin(liste)]
@@ -36,11 +39,12 @@ new = data[~data['pform'].isin(liste)]
 #new.reset_index(drop=True, inplace=True)
 
 
-#all = new
-all = new.sample(n=50000, random_state=1)
-#all = data.sample(n=50000, random_state=1)
+################# Trainingsgrundlage
 
-#all['stripped_text'] = all['stripped_text'].str.split().str[:100].str.join(' ')
+# Samplegröße angeben, weglassen für alle Daten und direkt mit data[] arbeiten
+all = new.sample(n=50000, random_state=1)
+
+# Nur die ersten 300 Wörter pro Text
 #all['stripped_text'] = all['stripped_text'].apply(lambda x: ' '.join(x.split(' ')[:300]))
 
 texts = all['stripped_text']
